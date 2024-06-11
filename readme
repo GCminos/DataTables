@@ -1,1 +1,105 @@
+# DataTables SSP for WordPress
+
+This repository provides a modified version of the SSP (Server-Side Processing) class for DataTables, tailored to work seamlessly with WordPress. This adaptation allows you to use DataTables with server-side processing in your WordPress projects.
+
+## Features
+
+- Seamless integration with WordPress
+- Supports DataTables server-side processing
+- Handles pagination, sorting, and filtering
+- Easy to configure and use
+
+## Installation
+
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/gcminos/datatables-ssp-wordpress.git
+    ```
+
+2. **Include the modified `ssp.php`** in your WordPress project.
+
+3. **Create your server-side script**:
+    - Create a new PHP file (e.g., `server-side-script.php`) in your WordPress theme or plugin directory.
+    - Include the WordPress environment and the modified `ssp.php` file.
+
+## Usage
+
+1. **Server-Side Script**:
+    ```php
+    <?php
+    // WordPress environment initialization
+    global $wpdb;
+
+    // Define your table and columns
+    $table = $wpdb->prefix . 'your_db_tables';
+    $primaryKey = 'column1';
+    $columns = [
+        ['db' => 'column1', 'dt' => 'Column 1'],
+        ['db' => 'column2', 'dt' => 'Column 2'],
+        ['db' => 'column3', 'dt' => 'Column 3'],
+    ];
+
+    // Include the modified SSP class
+    require 'path/to/your/ssp.class.php';
+
+    // Process the request
+    echo json_encode(
+        SSP::simple($_POST, $table, $primaryKey, $columns)
+    );
+    ```
+2. HTML:
+<table id="yuor_table" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Column 1</th>
+                        <th>Column 2</th>
+                        <th>Column 3</th>
+                    </tr>
+                </thead>
+            </table>
+2. **JavaScript Initialization**:
+    ```javascript
+    $(document).ready(function() {
+        $('#your_table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: <?php echo admin_url( 'admin-ajax.php' ); ?>
+                type: 'POST',
+            },
+            pageLength: 50,
+            columns: [
+                { data: 'column1' },
+                { data: 'column2' },
+                { data: 'column3' }
+            ],
+            order: [[ 2, 'desc' ]] // Default sorting by 'sent_at' column in descending order
+        });
+    });
+    ```
+
+## Configuration
+
+### `ssp.class.php`
+
+- The `ssp.class.php` file has been modified to work with WordPress's `$wpdb` object for database interactions.
+- Ensure that the paths to your WordPress environment and the `ssp.class.php` file are correctly specified in your server-side script.
+
+### Table and Columns Definition
+
+- Define your database table and columns in the server-side script.
+- The `columns` array should map database columns to DataTables columns.
+
+## Contributing
+
+Feel free to fork this repository and submit pull requests. Your contributions are welcome!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [DataTables](https://datatables.net/)
+- [WordPress](https://wordpress.org/)
 
