@@ -13,7 +13,7 @@ This repository provides a modified version of the SSP (Server-Side Processing) 
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/gcminos/datatables-ssp-wordpress.git
+    git clone https://github.com/gcminos/class-ssp-for-wordpress.git
     ```
 
 2. **Include the modified `ssp.php`** in your WordPress project.
